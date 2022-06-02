@@ -9,23 +9,19 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            When {
+            when {
                 branch 'master'
             }
             steps {
-                scripts {
+                script {
                     app = docker.build("srinuinapakurthi/train-schedule")
                     app.inside {
-                        sh 'echo $(curl localhost:8000)'
+                        sh 'echo $(curl localhost:8080)'
                     }
                 }
             }
         }
         stage('Push Docker Image') {
-            When {
-                branch 'master'
-            }
-            stage('Push Docker Image') {
             when {
                 branch 'master'
             }
@@ -38,6 +34,5 @@ pipeline {
                 }
             }
         }
-    }
-}
+    }   
 }
